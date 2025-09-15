@@ -5,6 +5,10 @@
 # from template.db
 backend/_db.sqlite3
 
+# Do not git control build related .NET folders
+backend/obj
+backend/bin
+
 # Logs
 logs
 *.log
