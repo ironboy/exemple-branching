@@ -3,7 +3,6 @@ import type Pet from "../interfaces/Pet";
 import { useLoaderData } from "react-router-dom";
 import { Row, Col, Card } from 'react-bootstrap';
 
-
 PetOwnerList.route = {
   path: '/pet-owners',
   menuLabel: 'Pet owners',
