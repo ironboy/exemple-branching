@@ -14,7 +14,7 @@ export default function PetList() {
   return <>
     <Row>
       <Col>
-        <h2>Pets</h2>
+        <h2 className="mb-4">Pets</h2>
       </Col>
     </Row>
     <Row>

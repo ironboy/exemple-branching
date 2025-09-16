@@ -39,7 +39,7 @@ export default function startBackend(app) {
   fs.existsSync(dbPath) || fs.copyFileSync(dbTemplatePath, dbPath);
 
   // Port to start the backend on
-  let startPort = 5001;
+  let startPort = 5010;
 
   // Start .NET backend from Node.js
   setTimeout(async function starter(initialStart = true) {

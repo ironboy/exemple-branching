@@ -9,7 +9,7 @@ Start.route = {
 export default function Start() {
   return <Row>
     <Col>
-      <h2>Petch Match: Admin System</h2>
+      <h2 className="mb-4">Petch Match: Admin System</h2>
       <p>Here we can register pets and pet owners, and assign pets to new owners.</p>
     </Col>
   </Row>

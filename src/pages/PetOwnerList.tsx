@@ -26,7 +26,7 @@ export default function PetOwnerList() {
   return <>
     <Row>
       <Col>
-        <h2>Pet owners</h2>
+        <h2 className="mb-4">Pet owners</h2>
       </Col>
     </Row>
     <Row>

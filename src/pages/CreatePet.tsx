@@ -1,6 +1,6 @@
 import type PetOwner from "../interfaces/PetOwner";
 import { useState } from 'react';
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { Row, Col, Form, Button } from 'react-bootstrap';
 
 CreatePet.route = {
@@ -12,11 +12,15 @@ CreatePet.route = {
 
 export default function CreatePet() {
 
+  const owners = useLoaderData() as PetOwner[];
+
   const [pet, setPet] = useState({
     name: '',
     species: '',
     ownerId: null
   });
+
+  const navigate = useNavigate();
 
   // handle changes to all input elements in the form
   // and update our pet state (an object)
@@ -34,11 +38,31 @@ export default function CreatePet() {
     setPet({ ...pet, [name]: value });
   }
 
-  const owners = useLoaderData() as PetOwner[];
+  async function sendForm(event: React.FormEvent) {
+    // prevent hard page reload
+    event.preventDefault();
+    // the backend does not like explicit null values
+    // for now fix be removing them from the payload
+    const payload: any = { ...pet };
+    if (payload.ownerId === null) {
+      delete payload.ownerId;
+    }
+    // send data about the new pet to rest-api
+    // for fetch options see:
+    // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+    await fetch('/api/pets', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    // navigate to
+    navigate('/pets');
+  }
 
   return <Row>
     <Col>
-      <Form>
+      <h2 className="mb-4">Add a new pet</h2>
+      <Form onSubmit={sendForm}>
         <Form.Group>
           <Form.Label className="d-block">
             <p>Pet name</p>
@@ -76,7 +100,7 @@ export default function CreatePet() {
             </Form.Select>
           </Form.Label>
         </Form.Group>
-        <Button className="mt-4 float-end">Create pet</Button>
+        <Button type="submit" className="mt-4 float-end">Add pet</Button>
       </Form>
     </Col>
   </Row>
