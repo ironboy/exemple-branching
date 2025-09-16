@@ -6,7 +6,7 @@ PetList.route = {
   path: '/pets',
   menuLabel: 'Pets',
   index: 3,
-  loader: async () => await (await fetch('/api/petsWithOwnerInfo')).json()
+  loader: async () => await (await fetch('/api/petsWithOwnerInfo?orderby=name')).json()
 }
 
 export default function PetList() {
@@ -36,16 +36,15 @@ export default function PetList() {
             <Card.Body>
               <Card.Title>{name}</Card.Title>
               <Card.Text>
-                <p>{name} is a {species}.</p>
-                <p className="mb-0">{name} {ownerId ?
-                  <>has the owner {ownerFirstName} {ownerLastName}.</> :
-                  <>has no owner.</>
-                }</p>
-
+                {name} is a {species}.
               </Card.Text>
+              <Card.Text>{name} {ownerId ?
+                <>has the owner {ownerFirstName} {ownerLastName}.</> :
+                <>has no owner.</>
+              }</Card.Text>
             </Card.Body>
           </Card>
         </Col>)}
-    </Row>
+    </Row >
   </>;
 }

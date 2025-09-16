@@ -8,7 +8,7 @@ PetOwnerList.route = {
   menuLabel: 'Pet owners',
   index: 2,
   loader: async () => ({
-    owners: await (await fetch('/api/petOwners')).json(),
+    owners: await (await fetch('/api/petOwners?orderby=firstName')).json(),
     pets: await (await fetch('/api/pets')).json(),
   })
 }
@@ -30,19 +30,28 @@ export default function PetOwnerList() {
       </Col>
     </Row>
     <Row>
-      {owners.map(({ id, firstName, lastName, email }) => <Col
+      {owners.map(({ id, firstName, lastName, email, pets }) => <Col
         xs={12}
-        md={6}
-        lg={4}
         key={id}
         className="mb-3"
       >
         <Card>
           <Card.Body>
             <Card.Title>{firstName} {lastName}</Card.Title>
-            <Card.Text>
+            <p>
               {firstName} has the mail-address <b>{email}</b>.
-            </Card.Text>
+            </p>
+            {!pets?.length ?
+              <>Owns no pets.</> :
+              <>
+                <p className="mb-1">Owns the following pet{pets.length > 1 ? 's' : ''}:</p>
+                <ul className="mb-0">
+                  {pets.map(({ id, name, species }) => <li key={id}>
+                    {name} ({species})
+                  </li>)}
+                </ul>
+              </>
+            }
           </Card.Body>
         </Card>
       </Col>)}

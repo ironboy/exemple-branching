@@ -1,6 +1,7 @@
-import type { JSX } from 'react';
-import { createElement } from 'react';
+import type {JSX} from 'react';
+import{createElement} from 'react';
 // page components
+import CreatePet from './pages/CreatePet.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import PetList from './pages/PetList.tsx';
 import PetOwnerList from './pages/PetOwnerList.tsx';
@@ -16,6 +17,7 @@ interface Route {
 }
 
 export default [
+  CreatePet,
   NotFoundPage,
   PetList,
   PetOwnerList,
