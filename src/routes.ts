@@ -2,6 +2,7 @@ import type {JSX} from 'react';
 import{createElement} from 'react';
 // page components
 import NotFoundPage from './pages/NotFoundPage.tsx';
+import PetList from './pages/PetList.tsx';
 import Start from './pages/Start.tsx';
 
 interface Route {
@@ -15,6 +16,7 @@ interface Route {
 
 export default [
   NotFoundPage,
+  PetList,
   Start
 ]
   // map the route property of each page component to a Route
