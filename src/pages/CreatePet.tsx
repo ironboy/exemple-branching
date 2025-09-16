@@ -65,7 +65,7 @@ export default function CreatePet() {
       <Form onSubmit={sendForm}>
         <Form.Group>
           <Form.Label className="d-block">
-            <p>Pet name</p>
+            <p className="mb-1">Pet name</p>
             <Form.Control
               onChange={setProperty}
               type="text"
