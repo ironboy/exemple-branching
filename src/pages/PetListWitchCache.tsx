@@ -11,13 +11,15 @@ interface Pet {
 // (disadvantage: now we will never refresh the pet list until hard reload)
 let pets: Pet[];
 
-PetList.route = {
+// commented out so that auto creation of routes.ts
+// doesn't get confused - we're not using this component
+/*PetList.route = {
   path: '/pet-list',
   menuLabel: 'Pet List',
   index: 2,
   // return pets if truthy otherwise fetch and assign fetch values to pets
   loader: async () => pets || (pets = await (await fetch('/api/pets')).json())
-}
+}*/
 
 export default function PetList() {
   const pets = useLoaderData() as Pet[];
