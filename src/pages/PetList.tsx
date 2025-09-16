@@ -1,18 +1,12 @@
+import type Pet from "../interfaces/Pet";
 import { useLoaderData } from "react-router-dom";
 import { Row, Col, Card } from 'react-bootstrap';
 
-interface Pet {
-  id: number;
-  name: string;
-  species: string;
-  ownerId: number | null;
-}
-
 PetList.route = {
-  path: '/pet-list',
-  menuLabel: 'Pet List',
-  index: 2,
-  loader: async () => await (await fetch('/api/pets')).json()
+  path: '/pets',
+  menuLabel: 'Pets',
+  index: 3,
+  loader: async () => await (await fetch('/api/petsWithOwnerInfo')).json()
 }
 
 export default function PetList() {
@@ -24,23 +18,34 @@ export default function PetList() {
       </Col>
     </Row>
     <Row>
-      {pets.map(({ id, name, species }) => <Col
+      {pets.map(({
+        id,
+        name,
+        species,
+        ownerId,
+        ownerFirstName,
+        ownerLastName
+      }) => <Col
         xs={12}
         md={6}
         lg={4}
-        xxl={3}
         key={id}
         className="mb-3"
       >
-        <Card>
-          <Card.Body>
-            <Card.Title>{name}</Card.Title>
-            <Card.Text>
-              {name} is a {species}.
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>)}
+          <Card className="pet-card">
+            <Card.Body>
+              <Card.Title>{name}</Card.Title>
+              <Card.Text>
+                <p>{name} is a {species}.</p>
+                <p className="mb-0">{name} {ownerId ?
+                  <>has the owner {ownerFirstName} {ownerLastName}.</> :
+                  <>has no owner.</>
+                }</p>
+
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </Col>)}
     </Row>
   </>;
 }
