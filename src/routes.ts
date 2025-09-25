@@ -2,6 +2,7 @@ import type {JSX} from 'react';
 import{createElement} from 'react';
 // page components
 import CreatePet from './pages/CreatePet.tsx';
+import Login from './pages/Login.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import PetList from './pages/PetList.tsx';
 import PetOwnerList from './pages/PetOwnerList.tsx';
@@ -18,6 +19,7 @@ interface Route {
 
 export default [
   CreatePet,
+  Login,
   NotFoundPage,
   PetList,
   PetOwnerList,
