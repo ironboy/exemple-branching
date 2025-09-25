@@ -1,3 +1,11 @@
 .pet-card {
   min-height: 160px;
 }
+
+.pet-list a {
+  text-decoration: none;
+}
+
+.pet-list a:hover .card {
+  background-color: #eee;
+}

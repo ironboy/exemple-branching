@@ -3,6 +3,7 @@ import{createElement} from 'react';
 // page components
 import CreatePet from './pages/CreatePet.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
+import PetDetails from './pages/PetDetails.tsx';
 import PetList from './pages/PetList.tsx';
 import PetOwnerList from './pages/PetOwnerList.tsx';
 import Start from './pages/Start.tsx';
@@ -19,6 +20,7 @@ interface Route {
 export default [
   CreatePet,
   NotFoundPage,
+  PetDetails,
   PetList,
   PetOwnerList,
   Start
