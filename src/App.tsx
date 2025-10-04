@@ -3,6 +3,8 @@ import Header from "./partials/Header";
 import Main from './partials/Main';
 import Footer from './partials/Footer';
 import BootstrapBreakpoints from './parts/BootstrapBreakpoints';
+import { useLoaderData } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 // turn off when not needed for debugging
 const showBootstrapBreakpoints = true;
@@ -13,8 +15,20 @@ export default function App() {
   useLocation();
   window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-  return <>
-    <Header />
+  // get logged in user (also see loader in main.tsx)
+  const [user, setUser] = useState();
+  const userFromLoader = useLoaderData();
+
+  useEffect(() => {
+    setUser(userFromLoader);
+  }, [userFromLoader]);
+
+  // making the setter global so it can be used from
+  // Login and Logout pages
+  (globalThis as any).setUser = setUser;
+
+  return !user ? null : <>
+    <Header user={user} />
     <Main />
     <Footer />
     {showBootstrapBreakpoints ? <BootstrapBreakpoints /> : null}

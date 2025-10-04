@@ -2,8 +2,16 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import routes from '../routes';
+import menuChoicesPerUserRole from '../menuChoicesPerUserRole';
 
-export default function Header() {
+export default function Header({ user }: { user: any; }) {
+
+  const userRole = user.role || 'visitor';
+  const email = user.email;
+
+  // get the menu choices to show based on user role
+  // the user is logged in with ('visitor' if not logged in)
+  const menuChoicesToShow = (menuChoicesPerUserRole as any)[userRole];
 
   // whether the navbar is expanded or not
   // (we use this to close it after a click/selection)
@@ -33,16 +41,23 @@ export default function Header() {
         <Navbar.Toggle onClick={() => setExpanded(!expanded)} />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            {routes.filter(x => x.menuLabel).map(
-              ({ menuLabel, path }, i) =>
-                <Nav.Link
-                  as={Link} key={i} to={path}
-                  className={isActive(path) ? 'active' : ''}
-                  /* close menu after selection*/
-                  onClick={() => setTimeout(() => setExpanded(false), 200)}
-                >{menuLabel}</Nav.Link>
-            )}
+            {routes
+              .filter(x => x.menuLabel)
+              .filter(x => menuChoicesToShow.includes(x.menuLabel))
+              .map(
+                ({ menuLabel, path }, i) =>
+                  <Nav.Link
+                    as={Link} key={i} to={path}
+                    className={isActive(path) ? 'active' : ''}
+                    /* close menu after selection*/
+                    onClick={() => setTimeout(() => setExpanded(false), 200)}
+                  >{menuLabel}</Nav.Link>
+              )}
           </Nav>
+          {!email ? null :
+            <div className="email float-md-end mt-1 mt-md-0 text-muted">
+              {email} ({user.role})
+            </div>}
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -1,24 +1,18 @@
 import { useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
-
-// TODO:
-// * Tell the user if log in unsuccesful
-// * If succesful go to start page / first allowed page
-// * Adjust menu choices according to user role
-// +
-// * Read the login status on each hard page reload using GET /api/login
-// * Show Logout if logged in and call DELETE /api/login when Logout is clicked
-
-// Thomas finish example for those in class having trouble with it
-// 26 september.
+import { useNavigate } from 'react-router-dom';
 
 Login.route = {
     path: '/login',
     menuLabel: 'Login',
     index: 10
-}
+};
 
 export default function Login() {
+
+    const navigate = useNavigate();
+
+    const [error, setError] = useState('');
 
     const [loginCreds, setLoginCreds] = useState({
         email: '',
@@ -26,7 +20,7 @@ export default function Login() {
     });
 
     function setProperty(event: React.ChangeEvent) {
-        let { name, value }: { name: string, value: string | number | null } =
+        let { name, value }: { name: string, value: string | number | null; } =
             event.target as HTMLInputElement;
         setLoginCreds({ ...loginCreds, [name]: value });
     }
@@ -40,12 +34,20 @@ export default function Login() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginCreds)
         })).json();
-        console.log(result)
+        if (result.error) {
+            setError('Something went wrong try again!');
+            setLoginCreds({ email: '', password: '' });
+        }
+        else {
+            (globalThis as any).setUser(result);
+            navigate('/');
+        }
     }
 
     return <Row>
         <Col>
             <Form onSubmit={send}>
+                {error ? <p className="text-danger">{error}</p> : ''}
                 <Form.Group>
                     <Form.Label className="d-block">
                         <p className="mb-1">Email</p>
@@ -74,5 +76,5 @@ export default function Login() {
                 <Button type="submit" className="mt-4 float-end">Login</Button>
             </Form>
         </Col>
-    </Row>
+    </Row>;
 }

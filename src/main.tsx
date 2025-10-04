@@ -13,6 +13,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: routes as RouteObject[],
+    loader: async () => await (await fetch('/api/login')).json(),
     HydrateFallback: App
   }
 ]);
